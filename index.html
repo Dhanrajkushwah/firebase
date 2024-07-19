@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mobile Otp Verification</title>
+    <style>
+        .container {
+            width: 302px;
+            height: 175px;
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+            border: 1px solid black;
+            padding: 25px;
+            border-radius: 10px;
+            background-color: cornflowerblue;
+        }
+        #number, #verificationcode {
+            width: calc(100% - 24px);
+            padding: 10px;
+            font-size: 20px;
+            margin-bottom: 5px;
+            outline: none;
+        }
+        #recaptcha-container {
+            margin-bottom: 5px;
+        }
+        #send, #verify {
+            width: 93%;
+            height: 40px;
+            outline: none;
+        }
+        .p-conf, .n-conf {
+            width: calc(100% - 22px);
+            border: 2px solid green;
+            border-radius: 4px;
+            padding: 8px 10px;
+            margin: 4px 0px;
+            background-color: rgba(0, 249, 12, 0.5);
+            display: none;
+        }
+        .n-conf {
+            border-color: red;
+            background-color: rgba(255, 0, 4, 0.5);
+        }
+        body{
+            background-image: url('https://i.pinimg.com/736x/58/bd/4f/58bd4fc9ebfccc1f2de419529bbf1a12.jpg');
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="color: white;">Mobile OTP Verification</h2>
+        <div id="sender">
+            <input type="text" id="number" class="formcontrol" placeholder="+91....">
+            <div id="recaptcha-container"></div>
+            <input type="button" id="send" value="Send" onclick="phoneAuth()">
+        </div>
+        <br>
+        <div id="Verifire" style="display: none;">
+            <input type="text" id="verificationcode" placeholder="OTP Code">
+            <input type="button" id="verify" value="Verify" onclick="codeverify()">
+            <div class="p-conf">Number Verified </div>
+            <div class="n-conf">OTP Error </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
+    <script>
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxSRzvYoaJUllOqbmkdutlHQEyHbiz0X4",
+            authDomain: "yt-project-d0a0b.firebaseapp.com",
+            projectId: "yt-project-d0a0b",
+            storageBucket: "yt-project-d0a0b.appspot.com",
+            messagingSenderId: "931869705833",
+            appId: "1:931869705833:web:82a3fb31d7c389dc6644f8",
+            measurementId: "G-6V8Z0TD03W"
+        };
+        // initializing firebase SDK
+        firebase.initializeApp(firebaseConfig);
+
+        // render recaptcha verifier
+        render();
+        function render() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+            recaptchaVerifier.render();
+        }
+
+        // function for send OTP
+        function phoneAuth() {
+            var number = document.getElementById('number').value;
+            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                coderesult = confirmationResult;
+                console.log('OTP Sent');
+            }).catch(function (error) {
+                // error in sending OTP
+                alert(error.message);
+            });
+        }
+
+        // function for OTP verify
+        function codeverify() {
+            var code = document.getElementById('verificationcode').value;
+            coderesult.confirm(code).then(function () {
+                console.log('OTP Verified');
+            }).catch(function () {
+                console.log('OTP Not correct');
+            })
+        }
+
+
+
+    </script>
+</body>
+
+</html>
