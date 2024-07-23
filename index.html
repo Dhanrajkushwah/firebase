@@ -127,7 +127,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,14 +141,12 @@
             background-color: #f9f9f9;
             text-align: center;
         }
-
         input {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 10px;
             font-size: 16px;
         }
-
         button {
             width: 100%;
             padding: 10px;
@@ -159,13 +156,11 @@
             border-radius: 4px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h2>Mobile OTP Verification</h2>
@@ -187,14 +182,14 @@
     <script>
         // Your Firebase configuration object
         const firebaseConfig = {
-            apiKey: "AIzaSyCxSRzvYoaJUllOqbmkdutlHQEyHbiz0X4",
-            authDomain: "yt-project-d0a0b.firebaseapp.com",
-            projectId: "yt-project-d0a0b",
-            storageBucket: "yt-project-d0a0b.appspot.com",
-            messagingSenderId: "931869705833",
-            appId: "1:931869705833:web:82a3fb31d7c389dc6644f8",
-            measurementId: "G-6V8Z0TD03W"
-        };
+  apiKey: "AIzaSyCxSRzvYoaJUllOqbmkdutlHQEyHbiz0X4",
+  authDomain: "yt-project-d0a0b.firebaseapp.com",
+  projectId: "yt-project-d0a0b",
+  storageBucket: "yt-project-d0a0b.appspot.com",
+  messagingSenderId: "931869705833",
+  appId: "1:931869705833:web:82a3fb31d7c389dc6644f8",
+  measurementId: "G-6V8Z0TD03W"
+};
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -204,15 +199,18 @@
 
         // Render reCAPTCHA
         function renderRecaptcha() {
-            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                'size': 'invisible',
-                'callback': function (response) {
-                    // reCAPTCHA solved - allow user to proceed
-                    sendOtp();
-                }
-            });
-            recaptchaVerifier.render();
+            if (!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': function(response) {
+                        // reCAPTCHA solved - allow user to proceed
+                        sendOtp();
+                    }
+                });
+                recaptchaVerifier.render();
+            }
         }
+        
 
         // Send OTP
         function sendOtp() {
@@ -240,12 +238,11 @@
         }
 
         // Add event listeners
-        document.getElementById('sendOtpButton').addEventListener('click', function () {
+        document.getElementById('sendOtpButton').addEventListener('click', function() {
             renderRecaptcha();
             sendOtp();
         });
         document.getElementById('verifyOtpButton').addEventListener('click', verifyOtp);
     </script>
 </body>
-
 </html>
