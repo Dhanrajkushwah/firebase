@@ -127,6 +127,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -141,12 +142,14 @@
             background-color: #f9f9f9;
             text-align: center;
         }
+
         input {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 10px;
             font-size: 16px;
         }
+
         button {
             width: 100%;
             padding: 10px;
@@ -156,11 +159,13 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Mobile OTP Verification</h2>
@@ -201,7 +206,7 @@
         function renderRecaptcha() {
             window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
                 'size': 'invisible',
-                'callback': function(response) {
+                'callback': function (response) {
                     // reCAPTCHA solved - allow user to proceed
                     sendOtp();
                 }
@@ -235,11 +240,12 @@
         }
 
         // Add event listeners
-        document.getElementById('sendOtpButton').addEventListener('click', function() {
+        document.getElementById('sendOtpButton').addEventListener('click', function () {
             renderRecaptcha();
             sendOtp();
         });
         document.getElementById('verifyOtpButton').addEventListener('click', verifyOtp);
     </script>
 </body>
+
 </html>
